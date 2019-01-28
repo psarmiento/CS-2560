@@ -3,6 +3,6 @@
 
 int main()
 {
-    printf("Hello, my name is Paul Sarmiento \n");
+    printf("Goodbye, I finished my CS 2560 HW1\n");
     return 0;
 }
