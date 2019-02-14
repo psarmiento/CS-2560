@@ -12,7 +12,7 @@ int main()
     // Initial amount Joe pays for when he first buys the stocks @ 45.50 each
     int stocksBought = 1000;
     double buyRate = 45.50;
-    double initialPaid = 1000 * 45.50;
+    double initialPaid = 1000 * buyRate;
     double commissionBuy = initialPaid * commissionRate;
 
     // Now calculate values for when Joe sold the socks @ 56.90 each
