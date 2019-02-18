@@ -1,3 +1,4 @@
+#include <stdio.h>
 // Global variables
 int A;
 int B;
