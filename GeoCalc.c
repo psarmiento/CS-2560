@@ -5,7 +5,6 @@
     This program is a geometry calculator that will ask for user input and based off their input will
     calculate area of certain basic geometric figures
     Input validation for negative values will be accounted for
-
 */
 int main()
 {
@@ -14,6 +13,7 @@ int main()
     printf("Geometry Calculator");
     while(choice != 4){
         menu();
+        fflush(stdout);
         scanf("%d", &choice);       // store input directly into choice address
 
         if (choice < 0 || choice > 4)   // input validation
@@ -48,6 +48,7 @@ void areaCircle(){
     double area = -1;   // area will be calculated when positive input is received
     while(area < 0){
         printf("\nEnter the value of the radius: ");
+        fflush(stdout);
         scanf("%d", &radius);
 
         if(radius < 0)  // Input validation
@@ -66,6 +67,7 @@ void areaRectangle(){
 
     while(length < 0){
         printf("Enter a value of length: ");
+        fflush(stdout);
         scanf("%d", &length);
         if(length < 0)
             printf("The value you entered is negative, only positive values are accepted\n");
@@ -73,6 +75,7 @@ void areaRectangle(){
 
     while(width < 0){
         printf("Enter a value for width: ");
+        fflush(stdout);
         scanf("%d", &width);
         if(width < 0)
             printf("The value you entered is negative, only positive values are accepted\n");
@@ -90,6 +93,7 @@ void areaOfTriangle(){
 
     while(base < 0){
         printf("Enter a value for the base: ");
+        fflush(stdout);
         scanf("%d", &base);
         if(base < 0)
             printf("The value you entered is negative, only positive values are accepted\n");
@@ -97,6 +101,7 @@ void areaOfTriangle(){
 
     while(height < 0){
         printf("Enter a value for the height: ");
+        fflush(stdout);
         scanf("%d", &height);
         if(height < 0)
             printf("The value you entered is negative, only positive values are accepted\n");
