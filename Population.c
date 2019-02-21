@@ -17,6 +17,7 @@ int main()
     // Ask for user input before any calculations can be done
     while(initialPop < 2){
         printf("Enter an initial population size (of at least 2 or greater value): ");
+        fflush(stdout);
         scanf("%d", &initialPop);
 
         if(initialPop < 2)      // Input validation
@@ -26,6 +27,7 @@ int main()
 
     while(bRate < 0){
         printf("Enter the birth rate of the population (positive numbers only): ");
+        fflush(stdout);
         scanf("%d", &bRate);
         if(bRate < 0)       // Input validation
             printf("Negative value entered, please enter a positive number\n");
@@ -33,6 +35,7 @@ int main()
 
     while(dRate < 0){
         printf("Enter the death rate of the population (positive numbers only): ");
+        fflush(stdout);
         scanf("%d", &dRate);
         if(dRate < 0)   // Input validation
             printf("Negative value entered, please enter a positive number\n");
@@ -40,6 +43,7 @@ int main()
 
     while(years <= 0){
         printf("Enter the number of years to display (at least 1 or greater): ");
+        fflush(stdout);
         scanf("%d", &years);
 
         if(years <= 0)  // Input validation
