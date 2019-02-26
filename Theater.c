@@ -1,6 +1,9 @@
 /*
     This program simulates a theater, the user will have to input ticket prices per row
     and will also allow user to buy tickets and view available seats
+    Author: Paul Sarmiento
+    CS 2560
+    Project 1
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +15,7 @@ int totalSales = 0;   // Keeps track of total tickets sold
 double moneyMade = 0;   // Total amount of money made from ticket sales
 int main()
 {
+	printf("Theater Program.\n\n");
     int userInput = 0;  // For menu choices
     // First initialize theater array to be empty
     for(int x = 0 ; x < 15; x++){
@@ -21,9 +25,13 @@ int main()
 
     rowPrice();
 
+    // Display seats
+    displaySeats();
+
     // Main loop for users to purchase tickets and view other info
     while(userInput != 5){
         menu();
+        fflush(stdout);
         scanf("%d", &userInput);
 
         if(userInput == 1)
@@ -36,6 +44,8 @@ int main()
             totalMoneyInfo();
 
     }
+
+    printf("End of program!\n");
     return 0;
 }
 
@@ -65,6 +75,7 @@ void rowPrice(){
     for(int x = 0; x < 15; x++){
         printf("Enter the ticket price for row %d: ", x + 1);
         fflush(stdin);
+        fflush(stdout);
         scanf("%lf", &prices[x]);
     }
 }
@@ -76,11 +87,13 @@ void purchase(){
     int row, column;
     // Prompt user for row and column choice for seats
     printf("Please select a row to sit in (1-15): ");
+    fflush(stdout);
     scanf("%d", &row);
     // Input validation
     if(row < 1 || row > 15){
         while( row < 1 || row > 15){
             printf("Invalid row input, please enter another row (1-15): ");
+            fflush(stdout);
             fflush(stdin);
             scanf("%d", &row);
         }
@@ -88,11 +101,13 @@ void purchase(){
     }
 
     printf("Please enter a seat #(1-30) for row %d: ", row);
+    fflush(stdout);
     fflush(stdin);
     scanf("%d", &column);
     if(column < 1 || column > 30){
         while( column < 1 || column > 30){
             printf("Invalid seat input, please enter another seat (1-30): ");
+            fflush(stdout);
             fflush(stdin);
             scanf("%d", &column);
         }
@@ -104,8 +119,10 @@ void purchase(){
         while(theater[row - 1][column - 1] == '*'){
             printf("Your current choice of seats are taken please choose another seat\n");
             printf("Row(1-15): ");
+            fflush(stdout);
             scanf("%d", &row);
             printf("Seat #(1-30): ");
+            fflush(stdout);
             scanf("%d", &column);
         }
     }
