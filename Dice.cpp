@@ -51,18 +51,38 @@ public:
 		m_player = 0;
 	}
 
-	// Return m_die value 
-	inline int getRoll() const { return m_die; }
+	// Return players total 
+	inline int getPlayerRoll() const { return m_player; }
+
+	// Compare computer and player's value and see if it's over 21 
+	// Return false if either value over 21
+	// Otherwise return true 
+	bool over21() {
+		if (m_comp > 21) {
+			cout << "Player wins!\n";
+			return false;
+		}
+		else if (m_player > 21) {
+			cout << "Computer wins! \n";
+			return false;
+		}
+		else
+			return true;
+	}
 
 };
 
 int main() {
 	// Enables roll() function to be different everytime it is called 
 	srand(time(NULL));
-
-	int y;
 	
-	Dice etc;
+	char input;
+	bool end_Round = true;
+
+	do {
+
+
+	} while (end_Round != false);
 	
 	return 0;
 }
