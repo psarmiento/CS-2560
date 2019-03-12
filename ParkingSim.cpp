@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
 using namespace std;
 /*
 	This program demostrates several classes working together to simulate 
@@ -102,6 +103,7 @@ public:
 		cout << "Car model: " << car.m_model << endl;
 		cout << "Car color: " << car.m_color << endl;
 		cout << "License plate: " << car.m_plate << endl;
+		std::cout << std::setprecision(2) << std::fixed;			// only print first 2 digits after decimal point 
 		cout << "Amount of fine issued: " << m_fine << endl;
 	}
 };
@@ -141,3 +143,14 @@ public:
 
 
 };
+
+
+int main() {
+	ParkedCar myCar("Toyota", "AE86", "White", 12334, 127);
+	ParkingMeter meter(60);
+	PoliceOfficer bob("Bob", 10101);
+	ParkingTicket fine;
+
+	bob.writeTicket(myCar, meter);
+	return 0;
+}
