@@ -70,19 +70,13 @@ public:
 
 	// Issue a fine amount if the parked cars minutes exceed 
 	// the amount of time bought to park 
-	double issueFine(ParkedCar &car, ParkingMeter &meter) {
-		if (car.m_minParked < meter.m_timeBought) {
-			// cars parked time now exceeds the amount of time bought
-			// get difference and issue fine accordingly 
-			// 60 min per hr 
-			double difference = car.m_minParked - meter.m_timeBought;
-
-			// Algorithm for percentage of time parked
-			// (difference/60) * 25
-			// first part gives percentage of time used up 
-			if (difference < 60)
-				m_fine = (difference / 60) * 25;
-			else if (difference >= 60) {
+	double issueFine(double difference) {
+		// Algorithm for percentage of time parked
+		// (difference/60) * 25
+		// first part gives percentage of time used up 
+		if (difference < 60)
+			m_fine = (difference / 60) * 25;
+		else if (difference >= 60) {
 				// Add first 25 dollars b/c gaurenteed time is over an hr 
 				// Then compute each hr after that 
 				m_fine += 25;
@@ -96,13 +90,19 @@ public:
 				// Implement same algorithm as before, but only for $10
 				if (difference < 60)
 					m_fine += (difference / 60) * 10;
-
+				return m_fine;
 			}
-			return m_fine;
-		}
+	return m_fine;
+	}
 
-		else
-		return m_fine;
+	// Print information about the car in question
+	// Also print amount of fine issued 
+	void carInfo(ParkedCar &car) {
+		cout << "Car brand: " << car.m_brand << endl;
+		cout << "Car model: " << car.m_model << endl;
+		cout << "Car color: " << car.m_color << endl;
+		cout << "License plate: " << car.m_plate << endl;
+		cout << "Amount of fine issued: " << m_fine << endl;
 	}
 };
 
@@ -124,6 +124,19 @@ public:
 	// Default constructor 
 	PoliceOfficer() {
 		PoliceOfficer("", 0);
+	}
+
+	void writeTicket(ParkedCar &car, ParkingMeter &meter) {
+		// If time parked exceeds time bought, then issue a ticket
+		// by reporting the amount of time illegally parked and 
+		// car info as well
+		if (car.m_minParked > meter.m_timeBought) {
+			double difference = car.m_minParked - meter.m_timeBought;
+			ParkingTicket p1;
+			p1.issueFine(difference);
+			p1.carInfo(car);
+		}
+		
 	}
 
 
