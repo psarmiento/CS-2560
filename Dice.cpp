@@ -123,6 +123,8 @@ int main() {
 
 		if (input == 'y' || input == 'Y') {
 			g1.playerRoll();
+			if (g1.getPlayerRoll() > 21)
+				endGame = g1.checkWinner();
 		}
 
 		else if (input == 'n' || input == 'N') {
