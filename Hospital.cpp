@@ -8,19 +8,31 @@ using namespace std;
 */
 class PatientAccount {
 private:
-	double m_feeTotal;					// patients total amount of fees for staying inside the hotel
+	string m_name;
+	double m_feeTotal;					// patients total amount of fees for staying inside the hospital
 	int m_daysIn;						// total amount of days stay in hospital 
+	double hospitalRate;				// the rate patient will be charged for staying each night in hospital
 public:
-	PatientAccount(double fee, int daysIn) {
-		m_feeTotal = fee;
-		m_daysIn = daysIn;
+	PatientAccount(string name, double rate) {
+		m_name = name;
+		hospitalRate = rate;
+		m_feeTotal = 0;
+		m_daysIn = 0;
 	}
 
 	PatientAccount() {					// Default constructor, call other constructor and set values to zero 
-		PatientAccount(0, 0);
+		PatientAccount("", 0);
 	}
 
-	void addDay() { m_daysIn++; }		// Increments the amount of days spent in hospital by 1, should be performed for every surgery a patient has
+	void addDay() {						 // Increments the amount of days spent in hospital by 1, should be performed for every surgery a patient has
+		m_daysIn++; 
+		m_feeTotal += hospitalRate;
+	}		
+
+	// Displays the patients billing information
+	void displayInfo() {
+		cout << m_name << "'s total bill comes out to $" << m_feeTotal << endl;
+	 }
 
 	friend class Surgery;
 	friend class Pharmacy;
@@ -35,15 +47,17 @@ public:
 */
 class Surgery{
 private:
-	double m_brainS, m_legS, m_armS, m_heartS, m_bodyS;
+	double priceArr[5];											// holds the values of the different surgeries offered
+																// surgery types correspond with the menu
 
 public:
-	Surgery() {						// Default constructor, setup default prices for all the surgeries
-		m_brainS = 3000.0;
-		m_legS = 1700.0;
-		m_armS = 1450.0;
-		m_heartS = 4500.0;
-		m_bodyS = 2500.0;
+	Surgery() {						
+		// Setup default prices
+		priceArr[0] = 3000.0;
+		priceArr[1] = 1700.0;
+		priceArr[2] = 1450.0;
+		priceArr[3] = 4500.0;
+		priceArr[4] = 2500.0;
 	}
 
 	/*
@@ -52,33 +66,17 @@ public:
 	*/
 	void selectSurgery(PatientAccount &patient) {
 		cout << "Please select the surgery or several surgeries the patient will undergo\n";
-		int input;						// User input 
+		int input = 0;						// User input 
 		while (input != 6) {
 			surgeryMenu();
 			cin >> input;
-			if (input == 1) {
-				patient.m_feeTotal += m_brainS;
-				patient.addDay();		// Should always add an extra day when a surgery is added for the patient 
+			if (input == 6)					// if input is 6, break out of loop
+				break;
+			else {
+				patient.m_feeTotal += priceArr[input - 1];				// Add the total of the appropriate choice to the patients total on their bill
+				patient.addDay();										// Also add an extra day of stay for patient everytime a surgery is added
 			}
 
-			else if (input == 2) {
-				patient.m_feeTotal += m_legS;
-				patient.addDay();
-			}
-			else if (input == 3) {
-				patient.m_feeTotal += m_armS;
-				patient.addDay();
-			}
-			else if (input == 4) {
-				patient.m_feeTotal += m_heartS;
-				patient.addDay();
-			}
-			else if (input == 5) {
-				patient.m_feeTotal += m_bodyS;
-				patient.addDay();
-			}
-			else if (input == 6)
-				break;
 		}
 	}
 
@@ -96,7 +94,46 @@ public:
 	Stores prices for at least 5 different medications 
 	Can update the charge value inside of PatientAccount 
 */
-class Pharmacy{};
+class Pharmacy{
+private:
+	double medArr[5];				// Array holding the prices for each different kind of medication offered 
+									// the appropriate name for the medication corresponds with the menu 
+
+public:
+	Pharmacy() {
+		medArr[0] = 30.0;
+		medArr[1] = 15.0;
+		medArr[2] = 38.0;
+		medArr[3] = 11.0;
+		medArr[4] = 60.0;
+	}
+
+
+	void selectMeds(PatientAccount &patient) {
+		cout << "Please select the medication that the patient will also require\n";
+		int input = 0;
+		while (input != 6) {				// get user input
+			medMenu();
+			cin >> input;
+			
+			if (input == 6)					// break if the input is 6
+				break;
+
+			else
+				patient.m_feeTotal += medArr[input - 1];			// add total to the patients bill, no need to add an hospital day 
+		}
+	}
+
+	// Menu for the medications
+	void medMenu() {
+		cout << "1. Pain killers\n";
+		cout << "2. Anti-biotics\n";
+		cout << "3. Sleeping aid pills\n";
+		cout << "4. Cough medicine\n";
+		cout << "5. Fever reducer\n";
+		cout << "6. Exit\n";
+	}
+};
 
 
 /*
@@ -108,6 +145,11 @@ class Pharmacy{};
 */
 int main()
 {
-
+	PatientAccount p1("Paul", 60);
+	Pharmacy test;
+	Surgery s1;
+	s1.selectSurgery(p1);
+	test.selectMeds(p1);
+	p1.displayInfo();
 	return 0;
 }
