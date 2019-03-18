@@ -62,11 +62,17 @@ public:
 		Date(1, 1, 1);
 	}
 
-	inline int getDay()const { return m_day; }	// Return day of current object
+	inline int getDay()const { return m_day; }							// Return day of current object
 
 	inline string getMonth()const { return monthArr[m_month - 1]; }		// Return month of current object in string
 
-	inline int getYear()const { return m_year; }
+	inline int getYear()const { return m_year; }						// Return year 
+
+	void setDay(int day) { m_day = day; }								// Set day
+
+	void setMonth(int month) { m_month = month; }						// Set month
+
+	void setYear(int year) { m_year = year; }							// Set year 
 
 	// This function will increment the day member of this class
 	// If it is the last day of the month, increment to next month 
@@ -141,8 +147,51 @@ std::ostream &operator << (ostream &output,const Date &temp) {
 	return output << temp.getMonth() << " " << temp.getDay() << ", " << temp.getYear() << endl;
 }
 
+// Operator overload for >> 
+// Prompts user to enter a date to be stored
 std::istream &operator >> (istream &input, Date &temp) {
+	// Temp variables to take in user input 
+	int day, month, year;
+	cout << "You will now be able to enter in a new date\n";
+	cout << "Enter month: ";
+	cin >> month;
 
+	// Bounds checking for month
+	while (month < 1 || month > 12) {
+		cout << "Invalid input for month, enter another month (1-12): ";
+		cin >> month;
+	}
+	temp.setMonth(month);
+
+	cout << "Enter a day: ";
+	cin >> day;
+
+	// Bounds checking if month is February
+	while (month == 2 && (day < 1 || day > 28)) {
+		cout << "Invalid day entered for February, enter another day: ";
+		cin >> day;
+	}
+
+	// Bounds checking for months ending with 30 
+	while ((month == 4 || month == 6 || month == 9 || month == 11) && (day < 1 || day > 30)) {
+		cout << "Invalid day entered for months ending with 30 days, enter another day: ";
+		cin >> day;
+	}
+
+	// Bounds checking for months ending with 31 days 
+	while ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && (day < 1 || day > 30)) {
+		cout << "Invalid day entered for months ending with 31 days, enter another day: ";
+		cin >> day;
+	}
+
+	// If day passes all checks, then assign it to the object 
+	temp.setDay(day);
+
+	// Set year 
+	cout << "Enter a year : ";
+	cin >> year;
+	temp.setYear(year);
+	return input;
 }
 
 
@@ -161,5 +210,10 @@ int main() {
 	--d1;
 	--d2;
 	cout << d1 << d2;
+
+
+	cin >> d1;
+	cout << "\n\nD1 after cin...\n";
+	cout << d1;
 	return 0;
 }
