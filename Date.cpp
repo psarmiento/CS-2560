@@ -24,19 +24,19 @@ public:
 		}
 
 		// Bounds checking for February
-		if (month == 2 && (day < 1 || day > 28)) {
+		else if (month == 2 && (day < 1 || day > 28)) {
 			cout << "Day is out of bounds for your selected month, day will be set to 1\n";
 			m_day = 1;
 		}
 
 		// Bounds checking for months ending with 30 days
-		if (month == 4 || month == 6 || month == 9 || month == 11 && (day < 1 ||day > 30)) {
+		else if ((month == 4 || month == 6 || month == 9 || month == 11) && (day < 1 || day > 30)) {
 			cout << "Day is out of bounds for your selected month, day will be set to 1\n";
 			m_day = 1;
 		}
 
 		// Bounds checking for months ending with 31 days
-		if (day < 1 || day > 31) {
+		else if (day < 1 || day > 31) {
 			cout << "Day is out of bounds for your selected month, day will be set to 1\n";
 			m_day = 1;
 		}
@@ -115,7 +115,7 @@ public:
 			m_year--;
 		}
 		// 1rst day of the month going back to a month starting at 31
-		else if ((m_month == 4 || m_month == 6 || m_month == 8 || m_month == 9 || m_month == 11) && m_day == 1) {
+		else if ((m_month == 2||(m_month == 4 || m_month == 6 || m_month == 8 || m_month == 9 || m_month == 11)) && m_day == 1) {
 			m_month--;
 			m_day = 31;
 		}
@@ -196,24 +196,22 @@ std::istream &operator >> (istream &input, Date &temp) {
 
 
 int main() {
-	Date d1(10, 25, 1995);
-	Date d2(2, 28, 1990);
-	cout << d1;
-	cout << d2;
+	Date d1(12, 31, 1995);
+	Date d2(2, 17, 1990);
+	Date d3(6, 1, 1982);
+	Date d4(6, 19, 1982);
+	
+	cout << "Original date values created\n";
+	cout << d1 << d2 << d3 << d4 << endl;
+
+	cout << "\nAfter the values have been altered\n";
 	++d1;
-	++d2;
-	cout << "Values after incrementing by 1\n";
-	cout << d1;
-	cout << d2;
-
-	cout << "Values after decrementing by 1\n";
-	--d1;
 	--d2;
-	cout << d1 << d2;
+	++d3;
+	++d4;
+	cout << d1 << d2 << d3 << d4 << endl;
 
-
-	cin >> d1;
-	cout << "\n\nD1 after cin...\n";
-	cout << d1;
+	int x = d4 - d3;
+	cout << "Difference between last two dates: " << x << endl;
 	return 0;
 }
