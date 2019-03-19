@@ -196,22 +196,30 @@ std::istream &operator >> (istream &input, Date &temp) {
 
 
 int main() {
+	// Initialize several Date objects
 	Date d1(12, 31, 1995);
 	Date d2(2, 17, 1990);
 	Date d3(6, 1, 1982);
 	Date d4(6, 19, 1982);
 	
+	// Output them 
 	cout << "Original date values created\n";
 	cout << d1 << d2 << d3 << d4 << endl;
 
 	cout << "\nAfter the values have been altered\n";
+	// Alter Date objects to test different cases
 	++d1;
 	--d2;
 	++d3;
 	++d4;
 	cout << d1 << d2 << d3 << d4 << endl;
 
+	// Print difference between two dates
 	int x = d4 - d3;
 	cout << "Difference between last two dates: " << x << endl;
+
+	// Test for operation >> overload 
+	cin >> d1;
+	cout << d1;
 	return 0;
 }
