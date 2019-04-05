@@ -1,3 +1,7 @@
+/*
+	This program deomonstrates the use of vectors and how they can dynamically 
+	allocate space required to perform actions similar to arrays 
+*/
 #include <iostream>
 #include <algorithm>
 #include <string>
