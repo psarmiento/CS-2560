@@ -1,3 +1,4 @@
+// This program demonstrates the use of different functions using templates 
 #include <iostream>
 #include <string>
 
