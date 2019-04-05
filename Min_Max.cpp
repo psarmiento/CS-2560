@@ -27,6 +27,7 @@ int main() {
 	std::string a = "sprite";
 	std::string b = "cat";
 
+	// Test out all template functions using different data types 
 	std::cout << "The bigger of the two integers is: " << max(x, y) << std::endl;
 	std::cout << "The min of the two integers is: " << min(x, y) << std::endl;
 	std::cout << "The bigger of the two strings is: " << max<std::string>(a, b) << std::endl;
