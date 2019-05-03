@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 
+
+double boxSpeed = -0.03;
 int main()
 {
 	// Create Window frame 
@@ -32,22 +34,26 @@ int main()
 
 		// If spacebar is pressed, jump up 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-			rect.move(0, -0.2);
+			rect.move(0, -0.3);
 		}
 
 		//Gravity for when jumping up
 		if (rect.getPosition().y < 450)
-			rect.move(0, 0.05);
+			rect.move(0, 0.03);
 		
 
 		else if (rect.getPosition().y <= 0)
 			rect.setPosition(rect.getPosition().x, 0);
 
 		// Move box to left towards player 
-		box.move(-0.03, 0);
+		box.move(boxSpeed, 0);
 
+		//  Once box is out of bounds, move it back to original position and repeat 
+		//  Also increment speed of box slowly 
 		if (box.getPosition().x < 0) {
 			box.setPosition(550, 480);
+			boxSpeed += -0.01;
+			box.move(boxSpeed, 0);
 		}
 
 		window.clear();
