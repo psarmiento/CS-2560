@@ -2,6 +2,8 @@
 
 
 double boxSpeed = -0.03;
+double jumpSpeed = -0.3;
+double grav = 0.03;
 int main()
 {
 	// Create Window frame 
@@ -34,12 +36,12 @@ int main()
 
 		// If spacebar is pressed, jump up 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-			rect.move(0, -0.3);
+			rect.move(0, jumpSpeed);
 		}
 
 		//Gravity for when jumping up
 		if (rect.getPosition().y < 450)
-			rect.move(0, 0.03);
+			rect.move(0, grav);
 		
 
 		else if (rect.getPosition().y <= 0)
