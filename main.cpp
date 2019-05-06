@@ -1,3 +1,14 @@
+/*
+	TO DO: 
+		- Update player lives 
+		- Work on limited # of jumps 
+		- Possibly adding in another box after certain speed 
+			has been reached 
+		
+	Tweaks:
+		- Speed of box? -> max speed of box 
+
+*/
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
@@ -7,9 +18,7 @@ double jumpSpeed = -0.3;
 double grav = 0.04;
 int maxJump = 0;				// max jumps = 2
 int playerLives = 3;
-struct Player {
-
-};
+int playerScore = 0;
 int main()
 {
 	// load font file to display text
@@ -19,15 +28,12 @@ int main()
 		std::cout << "Font folder cannot be loaded\n";
 	}
 
-	// Set text settings and display number of lives player has 
+	// Set text settings
 	sf::Text text;
 	text.setPosition(0, 0);
 	text.setFont(font);
 	text.setFillColor(sf::Color::White);
 	text.setCharacterSize(40);
-	std::ostringstream ss;
-	ss << "Lives left: " << playerLives;
-	text.setString(ss.str());
 
 	// Create Window frame 
 	sf::RenderWindow window(sf::VideoMode(500, 500), "Jump Block");
@@ -50,6 +56,13 @@ int main()
 	// while loop, where game code begins controlling the "physics" and other events happening 
 	while (window.isOpen())
 	{
+		// Display the players current lives 
+		std::stringstream s;
+		s << "Lives left: " << playerLives;
+		s << "\nScore: " << playerScore;
+		text.setString(s.str());
+
+		// If user decides to exit game 
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -84,7 +97,6 @@ int main()
 		// Update player lives
 		if (box.getGlobalBounds().intersects(player.getGlobalBounds())) {
 			box.setPosition(550, 480);
-			window.clear();
 			playerLives--;
 		}
 
@@ -92,6 +104,7 @@ int main()
 		//  Also increment speed of box slowly 
 		if (box.getPosition().x < 0) {
 			box.setPosition(550, 480);
+			playerScore++;
 
 			// Limit max speed of box 
 			if (boxSpeed > -0.07) {
