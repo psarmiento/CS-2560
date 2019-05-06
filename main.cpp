@@ -1,17 +1,40 @@
 #include <SFML/Graphics.hpp>
-
+#include <iostream>
+#include <sstream>
 
 double boxSpeed = -0.03;
 double jumpSpeed = -0.3;
-double grav = 0.03;
+double grav = 0.04;
+int maxJump = 0;				// max jumps = 2
+int playerLives = 3;
+struct Player {
+
+};
 int main()
 {
+	// load font file to display text
+	sf::Font font;
+	if (!font.loadFromFile("Raleway-Black.ttf"))
+	{
+		std::cout << "Font folder cannot be loaded\n";
+	}
+
+	// Set text settings and display number of lives player has 
+	sf::Text text;
+	text.setPosition(0, 0);
+	text.setFont(font);
+	text.setFillColor(sf::Color::White);
+	text.setCharacterSize(40);
+	std::ostringstream ss;
+	ss << "Lives left: " << playerLives;
+	text.setString(ss.str());
+
 	// Create Window frame 
-	sf::RenderWindow window(sf::VideoMode(500, 500), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(500, 500), "Jump Block");
 
 	// Draw players rectangle 
-	sf::RectangleShape rect(sf::Vector2f(10,50));
-	rect.setFillColor(sf::Color::White);
+	sf::RectangleShape player(sf::Vector2f(10, 50));
+	player.setFillColor(sf::Color::White);
 
 	// Draw squares player needs to jump over 
 	sf::RectangleShape box(sf::Vector2f(20, 20));
@@ -19,7 +42,7 @@ int main()
 
 	// Set rectangle in a random place inside the window 
 	// The very bottom of the window will be treated as the "ground"
-	rect.setPosition(150, 450);
+	player.setPosition(150, 450);
 
 	// Squares position initially offscreen and will be moved to the left towards the player 
 	box.setPosition(550, 480);
@@ -36,31 +59,52 @@ int main()
 
 		// If spacebar is pressed, jump up 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-			rect.move(0, jumpSpeed);
+			player.move(0, jumpSpeed);
+		}
+
+		// Limit number of jumps
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.getPosition().y < 450 && maxJump != 1) {
+			player.move(0, jumpSpeed);
+			++maxJump;
+
 		}
 
 		//Gravity for when jumping up
-		if (rect.getPosition().y < 450)
-			rect.move(0, grav);
-		
+		if (player.getPosition().y < 450)
+			player.move(0, grav);
 
-		else if (rect.getPosition().y <= 0)
-			rect.setPosition(rect.getPosition().x, 0);
+
+		else if (player.getPosition().y <= 0)
+			player.setPosition(player.getPosition().x, 0);
 
 		// Move box to left towards player 
 		box.move(boxSpeed, 0);
+
+		// Collision of player and box
+		// Update player lives
+		if (box.getGlobalBounds().intersects(player.getGlobalBounds())) {
+			box.setPosition(550, 480);
+			window.clear();
+			playerLives--;
+		}
 
 		//  Once box is out of bounds, move it back to original position and repeat 
 		//  Also increment speed of box slowly 
 		if (box.getPosition().x < 0) {
 			box.setPosition(550, 480);
-			boxSpeed += -0.01;
-			box.move(boxSpeed, 0);
+
+			// Limit max speed of box 
+			if (boxSpeed > -0.07) {
+				boxSpeed += -0.01;
+				box.move(boxSpeed, 0);
+			}
 		}
 
+		// Display window 
 		window.clear();
-		window.draw(rect);
+		window.draw(player);
 		window.draw(box);
+		window.draw(text);		
 		window.display();
 	}
 
