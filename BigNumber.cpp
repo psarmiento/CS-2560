@@ -1,12 +1,12 @@
 /*
-	BigNumber allows to store large values up to 1,000 digits long using vectors 
-	
+	BigNumber allows to store large values up to 1,000 digits long using vectors
+
 */
 #include "BigNumber.h"
 #include <iostream>
 
 
-BigNumber::BigNumber(){}
+BigNumber::BigNumber() {}
 
 BigNumber::BigNumber(int x) {
 	// If number greater than 10, grab remainder 
@@ -16,7 +16,7 @@ BigNumber::BigNumber(int x) {
 		v1.push_back(remainder);
 		v1.insert(v1.begin(), 1);
 	}
-	
+
 	// If value is 10 then store 10
 	else if (x == 10) {
 		v1.push_back(0);
@@ -42,7 +42,8 @@ void BigNumber::addDigit(int x) {
 		v1.push_back(x);
 }
 
-BigNumber BigNumber::operator +(BigNumber num) {
+BigNumber BigNumber::operator+ (BigNumber num) {
+	std::cout << "Test\n";
 	int sum;
 	// Temp vector 
 	std::vector<int> temp;
@@ -51,26 +52,30 @@ BigNumber BigNumber::operator +(BigNumber num) {
 		temp = v1;
 	else
 		temp = num.getVector();
-	
+
 	int tempSize = num.getSize();
 
+	std::cout << "temp size: " << tempSize << std::endl;
 	// Start at the end of each vector
 	// Add the two elements and carry remainders as necessary 
-	for (int x = v1.size(); x <= 0; x--) {
+	for (int x = tempSize; x >= 0; x--) {
 		int val = v1.at(x);
 		int tempVal = num.getVector().at(tempSize);
-		//std::cout << "Temp val: " << tempVal << std::endl;
 		sum = val + tempVal;
 
 		if (sum >= 10) {
 			int remainder = sum % 10;
-			temp.insert(temp.begin() + x, remainder);
-			temp.insert(temp.begin() + (x - 1), 1);
+			temp.at(x) = remainder;
+			temp.at(x + 1) += 1;
 		}
 
 		else if (sum == 10) {
-			temp.insert(temp.begin() + x, 0);
-			temp.insert(temp.begin() + (x - 1), 0);
+			temp.at(x) = 0;
+			temp.at(x + 1) += 1;
+		}
+
+		else {
+			temp.at(x) = sum;
 		}
 	}
 
@@ -97,7 +102,7 @@ BigNumber BigNumber::operator %(BigNumber num) {
 
 }
 
-BigNumber BigNumber::operator =(BigNumber num) {
+BigNumber BigNumber::operator= (BigNumber num) {
 	return BigNumber(num.getVector());
 }
 
