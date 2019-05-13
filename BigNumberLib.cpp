@@ -173,28 +173,9 @@ BigNumber BigNumber::operator -(BigNumber num) {
 			// Need to deal with this case 
 			// Add ten to current spot, then calculate difference 
 			largerVal += 10;
-			largerNum.at(largerSize - 1) -= 1;
-
-			// if value at beginning is 0, resize 
-			if (largerNum.at(0) == 0) {
-				std::cout << "Testing\n";
-				int resizeCount = 1;
-				difference = largerVal - smallerVal;
-				largerNum.at(largerSize) = difference;
-				for (int y = 1; y < largerNum.size(); y++) {
-					if (largerNum.at(y) == 0)
-						resizeCount++;
-
-					largerNum.at(y - 1) = largerNum.at(y);
-					largerNum.resize(largerNum.size() - resizeCount);
-				}
-				//largerNum.resize(largerNum.size() - resizeCount);
-			}
-
-			else {
-				difference = largerVal - smallerVal;
-				largerNum.at(largerSize) = difference;
-			}
+			largerNum.at(largerSize - 1) -= 1;		
+			difference = largerVal - smallerVal;
+			largerNum.at(largerSize) = difference;
 		}
 
 		// Else carry on with normal subtraction 
@@ -208,6 +189,18 @@ BigNumber BigNumber::operator -(BigNumber num) {
 		smallerSize--;
 	}
 
+	// if value at beginning is 0, resize 
+	if (largerNum.at(0) == 0) {
+		int resizeCount = 0;
+		// Shift all values down, leave no leading zeros
+		while (resizeCount < largerNum.size() - 1) {
+			//std::cout << "Larger num at end: " << largerNum.at(2) << std::endl;
+			largerNum.at(resizeCount) = largerNum.at(resizeCount + 1);
+			resizeCount++;
+		}
+
+	}
+	
 
 	return BigNumber(largerNum);
 }
