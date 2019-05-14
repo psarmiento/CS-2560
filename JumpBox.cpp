@@ -12,7 +12,6 @@
 double boxSpeed = -0.03;
 double jumpSpeed = -0.2;
 double grav = 0.04;
-int maxJump = 0;				// max jumps = 2
 int playerLives = 3;
 int playerScore = 0;
 
@@ -81,19 +80,9 @@ int main()
 			player.move(0, jumpSpeed);
 		}
 
-		// Limit number of jumps
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.getPosition().y < 450 && maxJump != 1) {
-			player.move(0, jumpSpeed);
-			++maxJump;
-
-		}
-
 		//Gravity for when jumping up
 		if (player.getPosition().y < 450)
 			player.move(0, grav);
-
-
-
 
 		// Move box to left towards player 
 		box.move(boxSpeed, 0);
