@@ -1,12 +1,5 @@
 /*
-	TO DO: 
-		- Update player lives 
-		- Work on limited # of jumps 
-		- Possibly adding in another box after certain speed 
-			has been reached 
-		
-	Tweaks:
-		- Speed of box? -> max speed of box 
+
 
 */
 #include <SFML/Graphics.hpp>
@@ -14,11 +7,12 @@
 #include <sstream>
 
 double boxSpeed = -0.03;
-double jumpSpeed = -0.3;
+double jumpSpeed = -0.2;
 double grav = 0.04;
 int maxJump = 0;				// max jumps = 2
 int playerLives = 3;
 int playerScore = 0;
+
 int main()
 {
 	// load font file to display text
@@ -62,6 +56,15 @@ int main()
 		s << "\nScore: " << playerScore;
 		text.setString(s.str());
 
+		// Player has no more lives left
+		// Print game over message and stop moving box 
+		if (playerLives == 0) {
+			box.setPosition(550, 480);
+			box.move(-boxSpeed, 0);
+			s << "\n\nGame over!";
+			text.setString(s.str());
+			window.draw(text);
+		}
 		// If user decides to exit game 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -87,8 +90,7 @@ int main()
 			player.move(0, grav);
 
 
-		else if (player.getPosition().y <= 0)
-			player.setPosition(player.getPosition().x, 0);
+		
 
 		// Move box to left towards player 
 		box.move(boxSpeed, 0);
