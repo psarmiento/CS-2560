@@ -1,6 +1,9 @@
 /*
-
-
+	Simple SFML game where the objective is for the player to jump over 
+	the incoming red block using the spacebar
+	Every successful jump over the block will result in the block going in a slightly
+	faster speed, with a speed cap after a certain number of jumps
+	Game ends when the player runs out of lives 
 */
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -90,7 +93,7 @@ int main()
 			player.move(0, grav);
 
 
-		
+
 
 		// Move box to left towards player 
 		box.move(boxSpeed, 0);
@@ -119,7 +122,7 @@ int main()
 		window.clear();
 		window.draw(player);
 		window.draw(box);
-		window.draw(text);		
+		window.draw(text);
 		window.display();
 	}
 
